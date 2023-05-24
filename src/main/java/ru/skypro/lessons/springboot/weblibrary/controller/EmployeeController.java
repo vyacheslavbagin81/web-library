@@ -1,10 +1,10 @@
-package controller;
+package ru.skypro.lessons.springboot.weblibrary.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pojo.Employee;
-import service.EmployeeService;
+import ru.skypro.lessons.springboot.weblibrary.pojo.Employee;
+import ru.skypro.lessons.springboot.weblibrary.service.EmployeeService;
 
 import java.util.List;
 
@@ -34,5 +34,10 @@ public class EmployeeController {
     @GetMapping("/high-salary")
     public List<Employee> highSalary() {
         return employeeService.aboveAverageSalary();
+    }
+
+    @GetMapping
+    public String getString() {
+        return "Privet";
     }
 }

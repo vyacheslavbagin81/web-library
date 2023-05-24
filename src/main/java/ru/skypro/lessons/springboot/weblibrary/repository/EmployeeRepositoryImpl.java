@@ -1,7 +1,7 @@
-package repository;
+package ru.skypro.lessons.springboot.weblibrary.repository;
 
 import org.springframework.stereotype.Repository;
-import pojo.Employee;
+import ru.skypro.lessons.springboot.weblibrary.pojo.Employee;
 
 import java.util.List;
 @Repository
