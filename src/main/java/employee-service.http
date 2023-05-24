@@ -1,3 +1,4 @@
+
 ### Получение суммы зарплат сотрудников
 GET http://localhost:8080/employee/salary/sum
 

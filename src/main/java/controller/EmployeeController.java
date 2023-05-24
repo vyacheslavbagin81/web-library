@@ -35,5 +35,4 @@ public class EmployeeController {
     public List<Employee> highSalary() {
         return employeeService.aboveAverageSalary();
     }
-
 }
