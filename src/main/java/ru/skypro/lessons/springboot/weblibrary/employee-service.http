@@ -10,3 +10,6 @@ GET http://localhost:8080/employee/salary/max
 
 ### Получение всех сотрудников, зарплата которых больше средней
 GET http://localhost:8080/employee/high-salary
+
+###
+DELETE http://localhost:8080/employee/employees/delete/2
