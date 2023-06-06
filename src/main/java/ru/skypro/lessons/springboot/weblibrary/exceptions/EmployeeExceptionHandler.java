@@ -5,6 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.util.NoSuchElementException;
+
 @RestControllerAdvice
 public class EmployeeExceptionHandler {
 
@@ -13,4 +15,9 @@ public class EmployeeExceptionHandler {
         String message = "Нет работника под данным id\n";
         return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
     }
+    @ExceptionHandler
+    public ResponseEntity<?> handleExceptionNoSuchElementException(NoSuchElementException noSuchElementException) {
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
 }

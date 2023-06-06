@@ -37,7 +37,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .values()
                 .stream()
                 .min(Comparator.comparing(Employee::getSalary))
-                .orElse(null);
+                .orElseThrow();
     }
 
     @Override
@@ -46,7 +46,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .values()
                 .stream()
                 .max(Comparator.comparing(Employee::getSalary))
-                .orElse(null);
+                .orElseThrow();
     }
 
     @Override

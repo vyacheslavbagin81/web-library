@@ -41,17 +41,17 @@ public class EmployeeController {
         employeeService.addEmployees(employee);
     }
 
-    @PutMapping("employees/edit/{id}")
+    @PutMapping("employees/{id}")
     void editEmployee(@RequestBody Employee employee, @PathVariable int id) throws ExceptionNoId {
         employeeService.editEmployee(employee, id);
     }
 
-    @GetMapping("employees/employee/{id}")
+    @GetMapping("employees/{id}")
     Employee printEmployeeToId(@PathVariable int id) throws ExceptionNoId {
         return employeeService.printEmployeeToId(id);
     }
 
-    @DeleteMapping("employees/delete/{id}")
+    @DeleteMapping("employees/{id}")
     void deleteEmployeeToId(@PathVariable int id) throws ExceptionNoId {
         employeeService.deleteEmployeeToId(id);
     }
