@@ -2,9 +2,9 @@ package ru.skypro.lessons.springboot.weblibrary.repository;
 
 import ru.skypro.lessons.springboot.weblibrary.pojo.Employee;
 
-import java.util.List;
+import java.util.Map;
 
 public interface EmployeeRepository {
-    List<Employee> getAllEmploees();
+    Map<Integer, Employee> getAllEmploees();
 
 }

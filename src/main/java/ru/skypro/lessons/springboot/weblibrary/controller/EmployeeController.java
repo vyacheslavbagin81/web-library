@@ -1,8 +1,7 @@
 package ru.skypro.lessons.springboot.weblibrary.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import ru.skypro.lessons.springboot.weblibrary.exceptions.ExceptionNoId;
 import ru.skypro.lessons.springboot.weblibrary.pojo.Employee;
 import ru.skypro.lessons.springboot.weblibrary.service.EmployeeService;
 
@@ -26,6 +25,7 @@ public class EmployeeController {
     public Employee salaryMin() {
         return employeeService.employeeMinSalary();
     }
+
     @GetMapping("/salary/max")
     public Employee salaryMax() {
         return employeeService.employeeMaxSalary();
@@ -36,8 +36,28 @@ public class EmployeeController {
         return employeeService.aboveAverageSalary();
     }
 
-    @GetMapping
-    public String getString() {
-        return "Privet";
+    @PostMapping("employees")
+    void addEmployees(@RequestBody Employee employee) {
+        employeeService.addEmployees(employee);
+    }
+
+    @PutMapping("employees/{id}")
+    void editEmployee(@RequestBody Employee employee, @PathVariable int id) throws ExceptionNoId {
+        employeeService.editEmployee(employee, id);
+    }
+
+    @GetMapping("employees/{id}")
+    Employee printEmployeeToId(@PathVariable int id) throws ExceptionNoId {
+        return employeeService.printEmployeeToId(id);
+    }
+
+    @DeleteMapping("employees/{id}")
+    void deleteEmployeeToId(@PathVariable int id) throws ExceptionNoId {
+        employeeService.deleteEmployeeToId(id);
+    }
+
+    @GetMapping("employees/salaryHigherThan/")
+    List<Employee> salaryHigherThan(@RequestParam("salary") int salary) {
+        return employeeService.salaryHigherThan(salary);
     }
 }

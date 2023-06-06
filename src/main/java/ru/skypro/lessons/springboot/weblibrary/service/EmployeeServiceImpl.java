@@ -1,6 +1,7 @@
 package ru.skypro.lessons.springboot.weblibrary.service;
 
 import org.springframework.stereotype.Service;
+import ru.skypro.lessons.springboot.weblibrary.exceptions.ExceptionNoId;
 import ru.skypro.lessons.springboot.weblibrary.pojo.Employee;
 import ru.skypro.lessons.springboot.weblibrary.repository.EmployeeRepository;
 
@@ -20,6 +21,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Integer sumSalary() {
         int sumSalary = 0;
         List<Integer> salaryList = repository.getAllEmploees()
+                .values()
                 .stream()
                 .map(Employee::getSalary)
                 .toList();
@@ -32,17 +34,19 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee employeeMinSalary() {
         return repository.getAllEmploees()
+                .values()
                 .stream()
                 .min(Comparator.comparing(Employee::getSalary))
-                .orElse(null);
+                .orElseThrow();
     }
 
     @Override
     public Employee employeeMaxSalary() {
         return repository.getAllEmploees()
+                .values()
                 .stream()
                 .max(Comparator.comparing(Employee::getSalary))
-                .orElse(null);
+                .orElseThrow();
     }
 
     @Override
@@ -50,9 +54,50 @@ public class EmployeeServiceImpl implements EmployeeService {
         int sizeRepository = repository.getAllEmploees().size();
         int averageSalary = sumSalary() / sizeRepository;
         return repository.getAllEmploees()
+                .values()
                 .stream()
                 .filter(employee -> employee.getSalary() > averageSalary)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void addEmployees(Employee employee) {
+        int id = repository.getAllEmploees().size();
+        repository.getAllEmploees().put(id, employee);
+    }
+
+    @Override
+    public void editEmployee(Employee employee, int id) throws ExceptionNoId {
+        checkId(id);
+        repository.getAllEmploees()
+                .replace(id, employee);
+    }
+
+    @Override
+    public Employee printEmployeeToId(int id) throws ExceptionNoId {
+        checkId(id);
+        return repository.getAllEmploees().get(id);
+    }
+
+    @Override
+    public void deleteEmployeeToId(int id) throws ExceptionNoId {
+        checkId(id);
+        repository.getAllEmploees().remove(id);
+    }
+
+    @Override
+    public List<Employee> salaryHigherThan(int salary) {
+        return repository.getAllEmploees()
+                .values()
+                .stream()
+                .filter(employee -> employee.getSalary() > salary)
+                .collect(Collectors.toList());
+    }
+
+    private void checkId(int id) throws ExceptionNoId {
+        if (!repository.getAllEmploees().containsKey(id)) {
+            throw new ExceptionNoId();
+        }
     }
 
 }
