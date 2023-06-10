@@ -19,5 +19,10 @@ public class EmployeeExceptionHandler {
     public ResponseEntity<?> handleExceptionNoSuchElementException(NoSuchElementException noSuchElementException) {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+    @ExceptionHandler
+    public ResponseEntity<?> handleExceptionNoSuchElementException(IllegalArgumentException illegalArgumentException) {
+        String message = "Указан нуливой id\n";
+        return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+    }
 
 }
