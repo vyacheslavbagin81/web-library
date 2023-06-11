@@ -1,5 +1,7 @@
 package ru.skypro.lessons.springboot.weblibrary.service;
 
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import ru.skypro.lessons.springboot.weblibrary.dto.EmployeeDTO;
 import ru.skypro.lessons.springboot.weblibrary.dto.EmployeeFullInfo;
 import ru.skypro.lessons.springboot.weblibrary.exceptions.ExceptionNoId;
@@ -21,6 +23,9 @@ public interface EmployeeService {
 
     // возвращает всех сотрудников с должностями
     List<EmployeeFullInfo> getAllEmployeeFullInfo();
+
+    // возвращает сотрудника по id с должностью
+    EmployeeFullInfo getAllEmployeeToIdFullInfo(int id) throws ExceptionNoId;
 
     // метод возвращает список сотрудников по позиции
     List<EmployeeDTO> getEmployeeByPositionName(String position);

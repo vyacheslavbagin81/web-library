@@ -68,6 +68,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public EmployeeFullInfo getAllEmployeeToIdFullInfo(int id) throws ExceptionNoId {
+        return repository.findById(id)
+                .map(EmployeeMapDTO::toEmployeeFullInfo)
+                .orElseThrow(()->new ExceptionNoId("Отсутствует сотрудник под данным id"));
+    }
+
+    @Override
     public List<EmployeeDTO> getEmployeeByPositionName(String position) {
         String pos = position.toLowerCase();
         if (!position.isBlank()) {

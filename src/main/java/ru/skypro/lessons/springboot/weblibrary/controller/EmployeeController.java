@@ -47,6 +47,13 @@ public class EmployeeController {
         return employeeService.getAllEmployeeFullInfo();
     }
 
+
+    // возвращает сотрудника по id с должностью
+    @GetMapping("employees/full_info/{id}")
+    EmployeeFullInfo getAllEmployeeToIdFullInfo(@PathVariable int id) throws ExceptionNoId {
+        return employeeService.getAllEmployeeToIdFullInfo(id);
+    }
+
     // метод возвращает список сотрудников по позиции
     @GetMapping("employees/position/{position}")
     List<EmployeeDTO> getEmployeeByPositionName(@PathVariable String position) {

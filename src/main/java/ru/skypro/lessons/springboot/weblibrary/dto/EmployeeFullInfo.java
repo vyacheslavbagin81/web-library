@@ -13,6 +13,9 @@ public class EmployeeFullInfo {
         this.positionName = positionName;
     }
 
+    public EmployeeFullInfo() {
+    }
+
     public int getId() {
         return id;
     }
