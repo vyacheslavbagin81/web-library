@@ -35,17 +35,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     public List<EmployeeDTO> getAllEmployee() {
         List<Employee> employeeList = new ArrayList<>();
         repository.findAll().forEach(employeeList::add);
-        return employeeList
-                .stream()
-                .map(EmployeeMapDTO::fromEmployee)
-                .collect(Collectors.toList());
+        return EmployeeMapDTO.toEmployeeDTOList(employeeList);
     }
 
     @Override
     public void editEmployee(EmployeeDTO employeeDTO) throws ExceptionNoId {
         int id = employeeDTO.getId();
         Employee result = repository.findById(id)
-                .orElseThrow(()->new ExceptionNoId("Отсутствует сотрудник под данным id"));
+                .orElseThrow(ExceptionNoId::new);
         if (!employeeDTO.getName().isBlank()) {
             result.setName(employeeDTO.getName());
         }
@@ -59,7 +56,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeDTO getEmployeeToId(int id) throws ExceptionNoId {
         return repository.findById(id)
                 .map(EmployeeMapDTO::fromEmployee)
-                .orElseThrow(()->new ExceptionNoId("Отсутствует сотрудник под данным id"));
+                .orElseThrow(ExceptionNoId::new);
     }
 
     @Override
@@ -71,17 +68,15 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeFullInfo getAllEmployeeToIdFullInfo(int id) throws ExceptionNoId {
         return repository.findById(id)
                 .map(EmployeeMapDTO::toEmployeeFullInfo)
-                .orElseThrow(()->new ExceptionNoId("Отсутствует сотрудник под данным id"));
+                .orElseThrow(ExceptionNoId::new);
     }
 
     @Override
     public List<EmployeeDTO> getEmployeeByPositionName(String position) {
         String pos = position.toLowerCase();
+        List<Employee> employeeList = repository.findEmployeeByPosition_Name(pos);
         if (!position.isBlank()) {
-            return repository.findEmployeeByPosition_Name(pos)
-                    .stream()
-                    .map(EmployeeMapDTO::fromEmployee)
-                    .collect(Collectors.toList());
+            return EmployeeMapDTO.toEmployeeDTOList(employeeList);
         } else return getAllEmployee();
     }
 
@@ -96,7 +91,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void deleteEmployeeToId(int id) throws ExceptionNoId {
         if(repository.existsById(id)){
         repository.deleteById(id);
-        } else throw new ExceptionNoId("Отсутствует сотрудник под данным id");
+        } else throw new ExceptionNoId();
     }
 
     @Override
@@ -116,14 +111,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<EmployeeDTO> withHighestSalary() {
-        return repository.withHighestSalary()
-                .stream()
-                .map(EmployeeMapDTO::fromEmployee)
-                .collect(Collectors.toList());
+        List<Employee> employeeList = repository.withHighestSalary();
+        return EmployeeMapDTO.toEmployeeDTOList(employeeList);
     }
 
     @Override
     public List<EmployeeDTO> findBySalaryGreaterThan(int salary) {
-        return null;
+        List<Employee> employeeList = repository.findBySalaryGreaterThan(salary);
+        return EmployeeMapDTO.toEmployeeDTOList(employeeList);
     }
 }

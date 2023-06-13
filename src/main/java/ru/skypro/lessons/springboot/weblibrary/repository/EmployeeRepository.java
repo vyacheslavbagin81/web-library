@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
+import ru.skypro.lessons.springboot.weblibrary.dto.EmployeeDTO;
 import ru.skypro.lessons.springboot.weblibrary.dto.EmployeeFullInfo;
 import ru.skypro.lessons.springboot.weblibrary.pojo.Employee;
 
@@ -32,5 +33,7 @@ public interface EmployeeRepository extends CrudRepository<Employee, Integer>, P
 
     @Query(value = "select e from Employee e where e.salary = (SELECT MAX(salary) FROM Employee)")
     List<Employee> withHighestSalary();
+
+    List<Employee> findBySalaryGreaterThan(int salary);
 
 }
