@@ -1,13 +1,17 @@
 package ru.skypro.lessons.springboot.weblibrary.service;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import ru.skypro.lessons.springboot.weblibrary.dto.EmployeeDTO;
+import ru.skypro.lessons.springboot.weblibrary.dto.EmployeeFullInfo;
 import ru.skypro.lessons.springboot.weblibrary.exceptions.ExceptionNoId;
 import ru.skypro.lessons.springboot.weblibrary.pojo.Employee;
 import ru.skypro.lessons.springboot.weblibrary.repository.EmployeeRepository;
 
-import java.util.Comparator;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -17,87 +21,103 @@ public class EmployeeServiceImpl implements EmployeeService {
         this.repository = repository;
     }
 
+    public EmployeeRepository getRepository() {
+        return repository;
+    }
+
+
     @Override
-    public Integer sumSalary() {
-        int sumSalary = 0;
-        List<Integer> salaryList = repository.getAllEmploees()
-                .values()
-                .stream()
-                .map(Employee::getSalary)
-                .toList();
-        for (Integer salary : salaryList) {
-            sumSalary = sumSalary + salary;
+    public void addEmployees(EmployeeDTO employee) {
+        repository.save(EmployeeMapDTO.toEmployee(employee));
+    }
+
+    @Override
+    public List<EmployeeDTO> getAllEmployee() {
+        List<Employee> employeeList = new ArrayList<>();
+        repository.findAll().forEach(employeeList::add);
+        return EmployeeMapDTO.toEmployeeDTOList(employeeList);
+    }
+
+    @Override
+    public void editEmployee(EmployeeDTO employeeDTO) throws ExceptionNoId {
+        int id = employeeDTO.getId();
+        Employee result = repository.findById(id)
+                .orElseThrow(ExceptionNoId::new);
+        if (!employeeDTO.getName().isBlank()) {
+            result.setName(employeeDTO.getName());
         }
-        return sumSalary;
+        if (employeeDTO.getSalary() > 0) {
+            result.setSalary(employeeDTO.getSalary());
+        }
+        repository.save(result);
     }
 
     @Override
-    public Employee employeeMinSalary() {
-        return repository.getAllEmploees()
-                .values()
-                .stream()
-                .min(Comparator.comparing(Employee::getSalary))
-                .orElseThrow();
+    public EmployeeDTO getEmployeeToId(int id) throws ExceptionNoId {
+        return repository.findById(id)
+                .map(EmployeeMapDTO::fromEmployee)
+                .orElseThrow(ExceptionNoId::new);
     }
 
     @Override
-    public Employee employeeMaxSalary() {
-        return repository.getAllEmploees()
-                .values()
-                .stream()
-                .max(Comparator.comparing(Employee::getSalary))
-                .orElseThrow();
+    public List<EmployeeFullInfo> getAllEmployeeFullInfo() {
+        return repository.getEmployeeFullInfo();
     }
 
     @Override
-    public List<Employee> aboveAverageSalary() {
-        int sizeRepository = repository.getAllEmploees().size();
-        int averageSalary = sumSalary() / sizeRepository;
-        return repository.getAllEmploees()
-                .values()
-                .stream()
-                .filter(employee -> employee.getSalary() > averageSalary)
+    public EmployeeFullInfo getAllEmployeeToIdFullInfo(int id) throws ExceptionNoId {
+        return repository.findById(id)
+                .map(EmployeeMapDTO::toEmployeeFullInfo)
+                .orElseThrow(ExceptionNoId::new);
+    }
+
+    @Override
+    public List<EmployeeDTO> getEmployeeByPositionName(String position) {
+        String pos = position.toLowerCase();
+        List<Employee> employeeList = repository.findEmployeeByPosition_Name(pos);
+        if (!position.isBlank()) {
+            return EmployeeMapDTO.toEmployeeDTOList(employeeList);
+        } else return getAllEmployee();
+    }
+
+    @Override
+    public List<EmployeeDTO> getEmployeeFromPage(int page) {
+        return repository.findAll(PageRequest.of(page, 10))
+                .stream().map(EmployeeMapDTO::fromEmployee)
                 .collect(Collectors.toList());
-    }
-
-    @Override
-    public void addEmployees(Employee employee) {
-        int id = repository.getAllEmploees().size();
-        repository.getAllEmploees().put(id, employee);
-    }
-
-    @Override
-    public void editEmployee(Employee employee, int id) throws ExceptionNoId {
-        checkId(id);
-        repository.getAllEmploees()
-                .replace(id, employee);
-    }
-
-    @Override
-    public Employee printEmployeeToId(int id) throws ExceptionNoId {
-        checkId(id);
-        return repository.getAllEmploees().get(id);
     }
 
     @Override
     public void deleteEmployeeToId(int id) throws ExceptionNoId {
-        checkId(id);
-        repository.getAllEmploees().remove(id);
+        if(repository.existsById(id)){
+        repository.deleteById(id);
+        } else throw new ExceptionNoId();
     }
 
     @Override
-    public List<Employee> salaryHigherThan(int salary) {
-        return repository.getAllEmploees()
-                .values()
-                .stream()
-                .filter(employee -> employee.getSalary() > salary)
-                .collect(Collectors.toList());
+    public Integer salarySum() {
+        return repository.salarySum();
     }
 
-    private void checkId(int id) throws ExceptionNoId {
-        if (!repository.getAllEmploees().containsKey(id)) {
-            throw new ExceptionNoId();
-        }
+    @Override
+    public Integer salaryAvg() {
+        return repository.salaryAvg();
     }
 
+    @Override
+    public EmployeeDTO employeeMinSalary() {
+        return EmployeeMapDTO.fromEmployee(repository.employeeMinSalary());
+    }
+
+    @Override
+    public List<EmployeeDTO> withHighestSalary() {
+        List<Employee> employeeList = repository.withHighestSalary();
+        return EmployeeMapDTO.toEmployeeDTOList(employeeList);
+    }
+
+    @Override
+    public List<EmployeeDTO> findBySalaryGreaterThan(int salary) {
+        List<Employee> employeeList = repository.findBySalaryGreaterThan(salary);
+        return EmployeeMapDTO.toEmployeeDTOList(employeeList);
+    }
 }

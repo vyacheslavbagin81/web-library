@@ -1,26 +1,53 @@
 package ru.skypro.lessons.springboot.weblibrary.service;
 
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import ru.skypro.lessons.springboot.weblibrary.dto.EmployeeDTO;
+import ru.skypro.lessons.springboot.weblibrary.dto.EmployeeFullInfo;
 import ru.skypro.lessons.springboot.weblibrary.exceptions.ExceptionNoId;
-import ru.skypro.lessons.springboot.weblibrary.pojo.Employee;
 
 import java.util.List;
 
 public interface EmployeeService {
-    Integer sumSalary();
+    // метод дабавляет сотрудника в базу
+    void addEmployees(EmployeeDTO employee);
 
-    Employee employeeMinSalary();
+    // метод возвращает полный список сотрудников
+    List<EmployeeDTO> getAllEmployee();
 
-    Employee employeeMaxSalary();
+    // метод для изменения данных сотрудника
+    void editEmployee(EmployeeDTO employeeDTO) throws ExceptionNoId;
 
-    List<Employee> aboveAverageSalary();
+    // возвращает сотрудника по id
+    EmployeeDTO getEmployeeToId(int id) throws ExceptionNoId;
 
-    void addEmployees(Employee employee);
+    // возвращает всех сотрудников с должностями
+    List<EmployeeFullInfo> getAllEmployeeFullInfo();
 
-    void editEmployee(Employee employee, int id) throws ExceptionNoId;
+    // возвращает сотрудника по id с должностью
+    EmployeeFullInfo getAllEmployeeToIdFullInfo(int id) throws ExceptionNoId;
 
-    Employee printEmployeeToId(int id) throws ExceptionNoId;
+    // метод возвращает список сотрудников по позиции
+    List<EmployeeDTO> getEmployeeByPositionName(String position);
 
+    // метод возвращает информацию о сотрудниках, основываясь на номере страницы.
+    List<EmployeeDTO> getEmployeeFromPage(int page);
+
+    // метод удаляет сотрудника по id
     void deleteEmployeeToId(int id) throws ExceptionNoId;
 
-    List<Employee> salaryHigherThan(int salary);
+    // метод возвращает сумму зарплат
+    Integer salarySum();
+
+    // метод возвращает среднюю зарплату
+    Integer salaryAvg();
+
+    // метод возвращает одного сотрудника с минимальной зарплатой
+    EmployeeDTO employeeMinSalary();
+
+    // метод возвращает список сотркдников с максимальной зарплатой
+    List<EmployeeDTO> withHighestSalary();
+
+    // метод возвращает список сотрудников с зарплатой выше передаваемого параметра
+    List<EmployeeDTO> findBySalaryGreaterThan(int salary);
 }
