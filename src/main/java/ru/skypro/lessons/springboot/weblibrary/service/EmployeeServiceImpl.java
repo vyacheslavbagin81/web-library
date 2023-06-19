@@ -7,16 +7,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.lessons.springboot.weblibrary.dto.EmployeeDTO;
 import ru.skypro.lessons.springboot.weblibrary.dto.EmployeeFullInfo;
-import ru.skypro.lessons.springboot.weblibrary.dto.ReportDTO;
 import ru.skypro.lessons.springboot.weblibrary.exceptions.ExceptionNoId;
 import ru.skypro.lessons.springboot.weblibrary.pojo.Employee;
-import ru.skypro.lessons.springboot.weblibrary.pojo.Report;
 import ru.skypro.lessons.springboot.weblibrary.repository.EmployeeRepository;
 import ru.skypro.lessons.springboot.weblibrary.repository.ReportRepository;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;

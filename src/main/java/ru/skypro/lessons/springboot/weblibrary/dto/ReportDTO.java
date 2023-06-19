@@ -2,14 +2,13 @@ package ru.skypro.lessons.springboot.weblibrary.dto;
 
 
 public class ReportDTO {
-    private int id;
     String deportmentName;
-    int numberOfEmployees;
+    long numberOfEmployees;
     int maxSalary;
     int minSalary;
-    int averageSalary;
+    double averageSalary;
 
-    public ReportDTO(String deportmentName, int numberOfEmployees, int maxSalary, int minSalary, int averageSalary) {
+    public ReportDTO(String deportmentName, long numberOfEmployees, int maxSalary, int minSalary, double averageSalary) {
         this.deportmentName = deportmentName;
         this.numberOfEmployees = numberOfEmployees;
         this.maxSalary = maxSalary;
@@ -28,11 +27,11 @@ public class ReportDTO {
         this.deportmentName = deportmentName;
     }
 
-    public int getNumberOfEmployees() {
+    public long getNumberOfEmployees() {
         return numberOfEmployees;
     }
 
-    public void setNumberOfEmployees(int numberOfEmployees) {
+    public void setNumberOfEmployees(long numberOfEmployees) {
         this.numberOfEmployees = numberOfEmployees;
     }
 
@@ -52,11 +51,11 @@ public class ReportDTO {
         this.minSalary = minSalary;
     }
 
-    public int getAverageSalary() {
+    public double getAverageSalary() {
         return averageSalary;
     }
 
-    public void setAverageSalary(int averageSalary) {
+    public void setAverageSalary(double averageSalary) {
         this.averageSalary = averageSalary;
     }
 }
