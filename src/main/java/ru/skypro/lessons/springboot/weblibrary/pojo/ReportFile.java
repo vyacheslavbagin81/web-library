@@ -10,10 +10,10 @@ public class ReportFile {
     @Id()
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    File file;
+    String path;
 
-    public ReportFile(File file) {
-        this.file = file;
+    public ReportFile(String path) {
+        this.path = path;
     }
 
     public ReportFile() {
@@ -24,7 +24,7 @@ public class ReportFile {
         return id;
     }
 
-    public File getFile() {
-        return file;
+    public String getPath() {
+        return path;
     }
 }
