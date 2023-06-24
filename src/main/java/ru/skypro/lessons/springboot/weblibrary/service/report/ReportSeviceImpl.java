@@ -1,4 +1,4 @@
-package ru.skypro.lessons.springboot.weblibrary.service;
+package ru.skypro.lessons.springboot.weblibrary.service.report;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.core.io.ByteArrayResource;
@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ru.skypro.lessons.springboot.weblibrary.dto.ReportDTO;
 import ru.skypro.lessons.springboot.weblibrary.exceptions.ExceptionNoId;
-import ru.skypro.lessons.springboot.weblibrary.pojo.ReportFile;
+import ru.skypro.lessons.springboot.weblibrary.entity.ReportFile;
 import ru.skypro.lessons.springboot.weblibrary.repository.EmployeeRepository;
 import ru.skypro.lessons.springboot.weblibrary.repository.ReportRepository;
 

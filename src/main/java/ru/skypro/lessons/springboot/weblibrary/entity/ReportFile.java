@@ -1,8 +1,6 @@
-package ru.skypro.lessons.springboot.weblibrary.pojo;
+package ru.skypro.lessons.springboot.weblibrary.entity;
 
 import jakarta.persistence.*;
-
-import java.io.File;
 
 @Entity
 @Table(name = "report_files")
