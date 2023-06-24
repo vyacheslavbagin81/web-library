@@ -7,8 +7,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.skypro.lessons.springboot.weblibrary.dto.EmployeeFullInfo;
 import ru.skypro.lessons.springboot.weblibrary.dto.ReportDTO;
-import ru.skypro.lessons.springboot.weblibrary.pojo.Employee;
-import ru.skypro.lessons.springboot.weblibrary.pojo.Position;
+import ru.skypro.lessons.springboot.weblibrary.entity.Employee;
+import ru.skypro.lessons.springboot.weblibrary.entity.Position;
 
 import java.util.List;
 

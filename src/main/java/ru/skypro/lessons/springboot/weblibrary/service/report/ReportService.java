@@ -1,4 +1,4 @@
-package ru.skypro.lessons.springboot.weblibrary.service;
+package ru.skypro.lessons.springboot.weblibrary.service.report;
 
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
