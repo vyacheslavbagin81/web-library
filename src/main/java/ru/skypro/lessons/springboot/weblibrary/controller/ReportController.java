@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.skypro.lessons.springboot.weblibrary.exceptions.ExceptionNoId;
-import ru.skypro.lessons.springboot.weblibrary.service.ReportService;
+import ru.skypro.lessons.springboot.weblibrary.service.report.ReportService;
 
 import java.io.IOException;
 

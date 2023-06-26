@@ -1,4 +1,4 @@
-package ru.skypro.lessons.springboot.weblibrary.pojo;
+package ru.skypro.lessons.springboot.weblibrary.entity;
 
 import jakarta.persistence.*;
 
