@@ -16,6 +16,7 @@ import ru.skypro.lessons.springboot.weblibrary.repository.ReportRepository;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 
 
@@ -40,7 +41,7 @@ public class ReportSeviceImpl implements ReportService {
         // сщздаем и записываем файл
         File file = new File("src/report/" + fileName);
         Files.writeString(file.toPath(), json);
-        ReportFile reportFile = new ReportFile(file);
+        ReportFile reportFile = new ReportFile(file.getPath());
         reportRepository.save(reportFile);
         return reportFile.getId();
     }
@@ -48,9 +49,8 @@ public class ReportSeviceImpl implements ReportService {
     @Override
     public ResponseEntity<Resource> getFile(int id) throws IOException, ExceptionNoId {
         ReportFile reportFile = reportRepository.findById(id).orElseThrow(ExceptionNoId::new);
-        File file = reportFile.getFile();
-        String fileName = file.getName();
-        Resource resource = new ByteArrayResource(Files.readAllBytes(file.toPath()));
+        String fileName = reportFile.getPath();
+        Resource resource = new ByteArrayResource(Files.readAllBytes(Path.of(fileName)));
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
