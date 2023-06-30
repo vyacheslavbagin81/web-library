@@ -1,4 +1,3 @@
-
 <configuration>
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -13,7 +12,11 @@
         </encoder>
     </appender>
 
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+    </root>
+
     <root level="EROR">
-        <appender-ref ref="FILE" />
+        <appender-ref ref="FILE"/>
     </root>
 </configuration>

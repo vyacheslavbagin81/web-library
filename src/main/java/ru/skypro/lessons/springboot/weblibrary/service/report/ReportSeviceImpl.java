@@ -54,7 +54,10 @@ public class ReportSeviceImpl implements ReportService {
     @Override
     public ResponseEntity<Resource> getFile(int id) throws IOException, ExceptionNoId {
         logger.info("Вызываем метод находит и возвращает созданный ранее файл в формате JSON по переданному уникальному идентификатору");
-        ReportFile reportFile = reportRepository.findById(id).orElseThrow(ExceptionNoId::new);
+        ReportFile reportFile = reportRepository.findById(id).orElseThrow(()->{
+            logger.error("Ошибка ExceptionNoId нет файла под id={}", id);
+            return new ExceptionNoId();
+        });
         String fileName = reportFile.getPath();
         Resource resource = new ByteArrayResource(Files.readAllBytes(Path.of(fileName)));
         return ResponseEntity.ok()

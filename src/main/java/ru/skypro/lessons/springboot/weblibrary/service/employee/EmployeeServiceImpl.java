@@ -57,7 +57,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         logger.info("Вызываем метод для изменения данных сотрудника");
         int id = employeeDTO.getId();
         Employee result = employeeRepository.findById(id)
-                .orElseThrow(ExceptionNoId::new);
+                .orElseThrow(()->{
+                    logger.error("Ошибка ExceptionNoId нет сотрудника под id={}", id);
+                    return new ExceptionNoId();
+                });
         logger.debug("Вызываем сотрудника с id={} из базы данных", id);
         if (!employeeDTO.getName().isBlank()) {
             result.setName(employeeDTO.getName());
@@ -74,7 +77,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         logger.info("Вызываем сотрудника с id={}", id);
         return employeeRepository.findById(id)
                 .map(EmployeeMapDTO::fromEmployee)
-                .orElseThrow(ExceptionNoId::new);
+                .orElseThrow(()->{
+                    logger.error("Ошибка ExceptionNoId нет сотрудника под id={}", id);
+                    return new ExceptionNoId();
+                });
     }
 
     @Override
@@ -88,7 +94,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         logger.info("Вызываем метод для получения сотрудника по id={} с наименованием отдела", id);
         return employeeRepository.findById(id)
                 .map(EmployeeMapDTO::toEmployeeFullInfo)
-                .orElseThrow(ExceptionNoId::new);
+                .orElseThrow(()->{
+                    logger.error("Ошибка ExceptionNoId нет сотрудника под id={}", id);
+                    return new ExceptionNoId();
+                });
     }
 
     @Override
@@ -116,7 +125,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         logger.info("Вызываем метод для удаления сотрудника по id {}", id);
         if (employeeRepository.existsById(id)) {
             employeeRepository.deleteById(id);
-        } else throw new ExceptionNoId();
+        } else {
+            logger.error("Ошибка ExceptionNoId нет сотрудника под id={}", id);
+            throw new  ExceptionNoId();
+        }
     }
 
     @Override
