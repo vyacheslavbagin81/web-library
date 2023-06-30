@@ -22,6 +22,8 @@ public class SalaryServiceImpl implements SalaryService {
     @Override
     public Integer salarySum() {
         logger.info("Получаем сумму всех з/п");
+    @Override
+    public Integer salarySum() {
         return employeeRepository.salarySum();
     }
 

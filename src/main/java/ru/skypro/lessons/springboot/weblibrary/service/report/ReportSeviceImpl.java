@@ -42,6 +42,12 @@ public class ReportSeviceImpl implements ReportService {
         logger.debug("Получаем данные из б/д сотрудников");
         // Создаем JSON-строку
         String json = objectMapper.writeValueAsString(report);
+        String fileName = newName();
+        ObjectMapper objectMapper = new ObjectMapper();
+        List<ReportDTO> report = employeeRepository.getReport();
+        // Создаем JSON-строку
+        String json = objectMapper.writeValueAsString(report);
+        System.out.println(json);
         // сщздаем и записываем файл
         File file = new File("src/report/" + fileName);
         Files.writeString(file.toPath(), json);
@@ -58,6 +64,7 @@ public class ReportSeviceImpl implements ReportService {
             logger.error("Ошибка ExceptionNoId нет файла под id={}", id);
             return new ExceptionNoId();
         });
+        ReportFile reportFile = reportRepository.findById(id).orElseThrow(ExceptionNoId::new);
         String fileName = reportFile.getPath();
         Resource resource = new ByteArrayResource(Files.readAllBytes(Path.of(fileName)));
         return ResponseEntity.ok()
@@ -72,5 +79,6 @@ public class ReportSeviceImpl implements ReportService {
         String newName = "report" + id + ".json";
         logger.debug("Создаем новое имя файла {}", newName);
         return newName;
+        return "report" + id + ".json";
     }
 }

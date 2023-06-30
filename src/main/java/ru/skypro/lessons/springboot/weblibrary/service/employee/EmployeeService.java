@@ -43,4 +43,4 @@ public interface EmployeeService {
     /* метод должен принимать на вход файл JSON, содержащий список сотрудников в JSON-формате.
     Все сотрудники из загружаемого файла должны быть сохранены в базе данных.*/
     void uploadAndSaveEmployees(MultipartFile file) throws IOException;
-}
+
