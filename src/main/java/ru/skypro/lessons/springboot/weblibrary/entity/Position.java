@@ -9,7 +9,8 @@ public class Position {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String name;
+    @Column(name = "name_position")
+    private String namePosition;
 
     public Position() {
     }
@@ -22,12 +23,12 @@ public class Position {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public String getNamePosition() {
+        return namePosition;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNamePosition(String name) {
+        this.namePosition = name;
     }
 
 }
