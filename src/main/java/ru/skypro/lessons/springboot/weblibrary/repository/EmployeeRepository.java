@@ -14,11 +14,11 @@ import java.util.List;
 
 @Repository
 public interface EmployeeRepository extends CrudRepository<Employee, Integer>, PagingAndSortingRepository<Employee, Integer> {
-    @Query("select new ru.skypro.lessons.springboot.weblibrary.dto.EmployeeFullInfo(e.id, e.name, e.salary, p.name) " +
+    @Query("select new ru.skypro.lessons.springboot.weblibrary.dto.EmployeeFullInfo(e.id, e.name, e.salary, p.namePosition) " +
             "from Employee e left join Position p where e.position.id = p.id")
     List<EmployeeFullInfo> getEmployeeFullInfo();
 
-    @Query("select e from Employee e where e.position.name = ?1")
+    @Query("select e from Employee e where e.position.namePosition = ?1")
     List<Employee> findEmployeeByPosition_Name(String name);
 
     @Query("select sum(salary) from Employee ")
@@ -42,9 +42,9 @@ public interface EmployeeRepository extends CrudRepository<Employee, Integer>, P
     List<Position> findAllPositnion();
 
     @Transactional
-    @Query(value = "select new ru.skypro.lessons.springboot.weblibrary.dto.ReportDTO(p.name, count(e) , max(e.salary) , min(e.salary) , avg (e.salary)) " +
+    @Query(value = "select new ru.skypro.lessons.springboot.weblibrary.dto.ReportDTO(p.namePosition, count(e) , max(e.salary) , min(e.salary) , avg (e.salary)) " +
             "from Employee e left join e.position p " +
-            "group by p.name")
+            "group by p.namePosition")
     List<ReportDTO> getReport();
 
 }
