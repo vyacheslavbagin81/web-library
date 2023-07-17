@@ -28,7 +28,7 @@ public interface EmployeeMapDTO {
         employeeFullInfo.setId(employee.getId());
         employeeFullInfo.setName(employee.getName());
         employeeFullInfo.setSalary(employee.getSalary());
-        employeeFullInfo.setPositionName(employee.getPosition().getName());
+        employeeFullInfo.setPositionName(employee.getPosition().getNamePosition());
         return employeeFullInfo;
     }
 

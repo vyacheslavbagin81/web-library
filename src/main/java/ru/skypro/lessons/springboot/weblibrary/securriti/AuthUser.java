@@ -8,10 +8,10 @@ public class AuthUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(nullable = false, unique = true)
+    @Column( name = "user_name", nullable = false, unique = true)
     private String username;
     @Column(nullable = false)
-    private String pasaword;
+    private String password;
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
     private Role role;
@@ -30,12 +30,12 @@ public class AuthUser {
         this.username = username;
     }
 
-    public String getPasaword() {
-        return pasaword;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPasaword(String pasaword) {
-        this.pasaword = pasaword;
+    public void setPassword(String pasaword) {
+        this.password = pasaword;
     }
 
     public Role getRole() {

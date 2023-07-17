@@ -3,7 +3,6 @@ package ru.skypro.lessons.springboot.weblibrary.securriti;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import ru.skypro.lessons.springboot.weblibrary.securriti.AuthUser;
 
 import java.util.Collection;
 import java.util.List;
@@ -65,7 +64,7 @@ public class SecurityUserPrincipal implements UserDetails {
     public static UserDetails fromAuthUser(AuthUser user) {
         return User.builder()
                 .username(user.getUsername())
-                .password(user.getPasaword())
+                .password(user.getPassword())
                 .authorities(user.getRole().getAuthority())
                 .build();
     }
